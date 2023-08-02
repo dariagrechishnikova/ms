@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
+import streamlit as st
 
 
 bac_list_refined = ['Staphylococcus aureus', 'Escherichia coli',
@@ -34,6 +35,7 @@ ab = {'Staphylococcus aureus': ['Penicillin', 'Ceftriaxone', 'Piperacillin-Tazob
 
 
 def plot_ab(shap_vals, spec_ab):
+  with st.spinner('Пожалуйста, подождите...'):
     std = np.std(shap_vals)
     mean = np.mean(shap_vals)
     list_for_plots = []
@@ -112,7 +114,7 @@ def color_resist(val):
 
 
 
-import streamlit as st
+
 
 
 st.title("MALDIScan")
@@ -144,6 +146,5 @@ if st.session_state.run:
         option = st.selectbox(
         'Для интерпретации результата для конкретного антибиотика выберите его из списка',antibiotic_dict[strain]
         )
-        with st.spinner('Пожалуйста, подождите...'):
-          spec_ab = pickle.load(open("spec_ab.pickle", "rb"))
-          plot_ab(shap_ab_dict[option], spec_ab)
+        spec_ab = pickle.load(open("spec_ab.pickle", "rb"))
+        plot_ab(shap_ab_dict[option], spec_ab)
