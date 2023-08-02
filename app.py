@@ -144,5 +144,6 @@ if st.session_state.run:
         option = st.selectbox(
         'Для интерпретации результата для конкретного антибиотика выберите его из списка',antibiotic_dict[strain]
         )
-        spec_ab = pickle.load(open("spec_ab.pickle", "rb"))
-        plot_ab(shap_ab_dict[option], spec_ab)
+        with st.spinner('Пожалуйста, подождите...'):
+          spec_ab = pickle.load(open("spec_ab.pickle", "rb"))
+          plot_ab(shap_ab_dict[option], spec_ab)
