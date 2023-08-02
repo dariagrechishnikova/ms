@@ -35,7 +35,6 @@ ab = {'Staphylococcus aureus': ['Penicillin', 'Ceftriaxone', 'Piperacillin-Tazob
 
 
 def plot_ab(shap_vals, spec_ab):
-  with st.spinner('Пожалуйста, подождите...'):
     std = np.std(shap_vals)
     mean = np.mean(shap_vals)
     list_for_plots = []
@@ -146,5 +145,7 @@ if st.session_state.run:
         option = st.selectbox(
         'Для интерпретации результата для конкретного антибиотика выберите его из списка',antibiotic_dict[strain]
         )
-        spec_ab = pickle.load(open("spec_ab.pickle", "rb"))
-        plot_ab(shap_ab_dict[option], spec_ab)
+        waiting_text = 'Обрабатываем спектр для ' + str(option) + '. Пожалуйста, подождите...'
+        with st.spinner(waiting_text):
+          spec_ab = pickle.load(open("spec_ab.pickle", "rb"))
+          plot_ab(shap_ab_dict[option], spec_ab)
